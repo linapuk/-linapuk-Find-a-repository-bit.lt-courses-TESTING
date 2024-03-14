@@ -31,7 +31,7 @@ describe("Issue Creation Tests", function () {
     loginPage = new LoginPage(driver);
     issuePage = new IssuePage(driver);
     await loginPage.open();
-    await loginPage.loginWithUser("lina.puksme@gmail.com", "lina.puksme@gmail.com");
+    await loginPage.loginWithUser("", "");
   });
 
   after(async function () {

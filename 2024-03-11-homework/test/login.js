@@ -13,8 +13,8 @@ describe("1 Should be able to login", function () {
     loginPage.open();
 
     await loginPage.loginWithUser(
-      "lina.puksme@gmail.com",
-      "lina.puksme@gmail.com"
+      "",
+      ""
     );
   });
   afterEach(async function () {
