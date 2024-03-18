@@ -1,8 +1,9 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
 // const assert = require("assert") pašalinom šitą assertą, nes chai turi savo ir gaunama klaida 'identifier 'assert' has already been declared
 const Contacts = require("../api/contacts");
-const {expect, assert} = require ("chai"); // <- irasom chai asserty metodus
+const {expect, assert, should} = require ("chai"); // <- irasom chai asserty metodus
 const Random = require("../helper/random");
+// should = require("chai")
 
 const env = process.env.NODE_ENV;
 require("dotenv").config({path: `./ENV/${env}.env`});
