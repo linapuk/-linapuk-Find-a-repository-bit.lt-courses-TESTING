@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "axios": "^1.6.7",
+    "chai": "^4.3.10",
+    "dotenv": "^16.4.5",
+    "mocha": "^10.3.0",
+    "selenium-webdriver": "^4.18.1"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test mocha",
+    "test:prod": "NODE_ENV=prod mocha",
+    "test:test": "NODE_ENV=test mocha"
+  }
+}
