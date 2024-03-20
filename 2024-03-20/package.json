@@ -4,5 +4,6 @@
   },
     "scripts": {
       "cypress:open": "cypress open",
+      "test": "cypress run"
     }
 }
