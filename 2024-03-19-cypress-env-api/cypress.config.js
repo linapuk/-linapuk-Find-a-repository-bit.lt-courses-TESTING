@@ -1,13 +1,20 @@
+const cypress = require("cypress");
 const { defineConfig } = require("cypress");
+require("dotenv").config({path: `./cypress/ENV/${process.env.NODE_ENV || 'test'}.env`}); // || nurodoma default reiksme
 
 module.exports = defineConfig({
   env: {
-    username: 'lina.puksme@gmail.com',
-    password: 'lina.puksme@gmail.com',
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    url: process.env.URL,
+    api_url: process.env.API_URL,
+    api_key: process.env.API_KEY,
   },
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+
+      console.log("environment " + process.env.NODE_ENV); // tam akd pasichekinti kuria aplinka yra
     },
   },
 });
