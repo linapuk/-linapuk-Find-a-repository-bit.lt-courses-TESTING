@@ -2,30 +2,43 @@ describe("API Contacts spec", () => {
   beforeEach(() => {});
 
   it("Should be able to create contact", () => {
-    const response = cy.request({
-      method: "POST",
-      url: "https://api.omnisend.com/v3/contacts",
-      failOnStatusCode: false,
-      body: {
-        firstName: "NameCY01",
-        lastName: "SurnameCY01",
-        identifiers: [
-          {
-            type: "email",
-            channels: {
-              email: {
-                status: "subscribed",
-              },
-            },
-            id: "testapicy@testcy.com",
-          },
-        ],
-      },
-      headers: {
-        'X-API-KEY': "65ccf871431c8b7f3b6a5c03-1OFS7QHiROaFyzna880OlyOo0jEQYMy3r3VIBD9fJ4d6LU4WKx",
-      },
+    cy.createOntactByEmail("naujasemailas@ytert.jk")
+    .then((response) => {
+      // cy.log(JSON.stringify(response.body));
+      expect(response.body.email).eql("naujasemailas@ytert.jk");
+      expect(response.body.contactID).exist;
+      expect(response.body.password).not.exist;
+      expect(response.status).eq(200);
+      expect(response.body.contactID).lengthOf(24);
+      // expect(response.body.contactID.length).eq(24);
+      return response.body.contactID
+    })
+    .then((contactID) => {
+      cy.GETcontact(contactID).then((response) => {
+        expect(response.body.email).eql("naujasemailas@ytert.jk");
+      })
+    });
+  });
+
+  it("Should not be able to create contact with invalid email", () => {
+    cy.createOntactByEmail("invalidemailapi.lt",false).then((response) => {
+      cy.log(JSON.stringify(response.body));
+      expect(response.status).eq(400);
+    });
+  });
+
+  it("Should be able to get contact list of 10 contacts", () => {
+    cy.GETcontactList(undefined, 5).then((response) => {
+      expect(response.status).eq(200);
+      expect(response.body.contacts).lengthOf(5);
+      cy.log(response.body);
     });
 
-    expect(response.status).to.eq(200)
+    // it("Should be able to update contact", () => {
+    //   cy.P(undefined, 5).then((response) => {
+    //     expect(response.status).eq(200);
+    //     expect(response.body.contacts).lengthOf(5);
+    //     cy.log(response.body);
+    //   });
   });
 });
