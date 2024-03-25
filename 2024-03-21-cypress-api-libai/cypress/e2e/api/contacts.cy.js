@@ -1,5 +1,33 @@
+import { faker } from '@faker-js/faker';
+let randomEmail = faker.internet.email().toLowerCase()
+let firstName = faker.string.firstName;
+let lastName = faker.string.lastName;
+
+
+let contact = {
+    firstName: firstName,
+    lastName: lastName,
+    identifiers: [
+      {
+        type: "email",
+        channels: {
+          email: {
+            status: "subscribed",
+          },
+        },
+        id: randomEmail,
+      },
+    ],
+  };
+
 describe("API Contacts spec", () => {
-  beforeEach(() => {});
+  before(() => {
+    cy.createContactByEmail(contact.identifiers[0].id).then((response) => {
+      contact.contactID = response.body.contactID;
+      Cypress.env("contactID", response.body.contactID);
+      cy.log(contact);
+    });
+  });
 
   it("Should be able to create contact", () => {
     cy.createContactByEmail("naujasemailas@ytert.jk")
@@ -11,12 +39,6 @@ describe("API Contacts spec", () => {
         expect(response.status).eq(200);
         expect(response.body.contactID).lengthOf(24);
         // expect(response.body.contactID.length).eq(24);
-        return response.body.contactID;
-      })
-      .then((contactID) => {
-        cy.GETcontact(contactID).then((response) => {
-          expect(response.body.email).eql("naujasemailas@ytert.jk");
-        });
       });
   });
 
@@ -35,37 +57,33 @@ describe("API Contacts spec", () => {
     });
   });
 
-  it("Should be able to update contact", () => {
-    cy.createContactByEmail("naujasemailas02@ytert.jk")
-      // .then((response) => {
-      //   return response.body.contactID;
-      // })
-      .then((response) => {
-        
-
-        let body = {
-          firstName: "NameCY02",
-          lastName: "SurnameCY02",
-          identifiers: [
-            {
-              type: "email",
-              channels: {
-                email: {
-                  status: "subscribed",
-                },
-              },
-              id: response.body.email,
-            },
-          ],
-        };
-        // cy.log(body);
-        cy.PATCHcontact(body, response.body.contactID).then((response) => {
-          expect(response.body.email).eql("naujasemailas02@ytert.jk");
-          expect(response.body.firstName).eql("NameCY02");
-          expect(response.body.lastName).eql("SurnameCY02");
-          expect(response.status).eq(200);
-          cy.log(response.body);
-        });
-      });
+  it("Should be able to get contact by id", () => {
+    cy.GETcontact(contact.contactID).then((response) => {
+      expect(response.status).eq(200);
+      expect(response.body.email).eq(contact.identifiers[0].id);
+      expect(response.body.contactID).eq(contact.contactID);
+    });
   });
+
+  it("Should be able to update contact", () => {
+    contact.firstName = "Petras";
+    contact.lastName = "Petraitis";
+    cy.PATCHcontact(contact, Cypress.env("contactID")).then((response) => {
+      expect(response.status).eq(200);
+      expect(response.body.email).eq(contact.identifiers[0].id);
+      expect(response.body.contactID).eq(contact.contactID);
+      expect(response.body.firstName).eq(contact.firstName);
+      expect(response.body.lastName).eq(contact.lastName);
+    });
+  });
+
+  it("Should be able to get contact by email", () => {
+    cy.GETcontactList(contact.identifiers[0].id, 10).then((response) => {
+      expect(response.status).eq(200);
+      expect(response.body.contacts[0].email).eq(contact.identifiers[0].id);
+      expect(response.body.contacts[0].contactID).eq(contact.contactID);
+      expect(response.body.contacts).lengthOf(1);
+    });
+  });
+
 });

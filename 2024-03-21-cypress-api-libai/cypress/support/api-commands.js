@@ -24,10 +24,10 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('POSTcontact', (contact, failOnStatusCode) => {
-  if (failOnStatusCode == undefined) {
-    failOnStatusCode = true
-  }; // jei undefined tai duok true sita salyga ta sako, okitu atveju naudok tokia kokia pauodama
+Cypress.Commands.add('POSTcontact', (contact, failOnStatusCode = true) => {
+  // if (failOnStatusCode == undefined) {
+  //   failOnStatusCode = true
+  // }; // jei undefined tai duok true sita salyga ta sako, okitu atveju naudok tokia kokia pauodama, pasalinom, vietoj to kaip parametra nurodeme failOnStatusCode = true
     return cy.request({
         method: "POST",
         url: `${Cypress.env("apiUrl")}/v3/contacts`,
@@ -39,10 +39,10 @@ Cypress.Commands.add('POSTcontact', (contact, failOnStatusCode) => {
       });
 });
 
-Cypress.Commands.add('createContactByEmail', (email, failOnStatusCode) => {
-  if (failOnStatusCode == undefined) {
-    failOnStatusCode = true
-  }; 
+Cypress.Commands.add('createContactByEmail', (email, failOnStatusCode = true) => {
+  // if (failOnStatusCode == undefined) {
+  //   failOnStatusCode = true
+  // }; 
     return cy.request({
         method: "POST",
         url: `${Cypress.env("apiUrl")}/v3/contacts`,
@@ -68,10 +68,10 @@ Cypress.Commands.add('createContactByEmail', (email, failOnStatusCode) => {
       });
 });
 
-Cypress.Commands.add('GETcontact', (contactID, failOnStatusCode) => {
-  if (failOnStatusCode == undefined) {
-    failOnStatusCode = true
-  };
+Cypress.Commands.add('GETcontact', (contactID, failOnStatusCode = true) => {
+  // if (failOnStatusCode == undefined) {
+  //   failOnStatusCode = true
+  // };
     return cy.request({
         method: "GET",
         url: `${Cypress.env("apiUrl")}/v3/contacts/${contactID}`,
@@ -82,17 +82,24 @@ Cypress.Commands.add('GETcontact', (contactID, failOnStatusCode) => {
       });
 });
 
-Cypress.Commands.add('GETcontactList', (email, limit, failOnStatusCode) => {
-  let searchByEmail = ""; // pridejom jog tuscia stringa SVARBU, kad nebutu space, nes prideda vietoj space 20%, nes pries tai buvo klaida, jog undefiend paversdavo stringu, o ne kaip undefiend reiksme.
-  if (failOnStatusCode == undefined) {
-    failOnStatusCode = true
+Cypress.Commands.add('GETcontactList', (email, limit, failOnStatusCode = true) => {
+  // if (failOnStatusCode == undefined) {
+  //   failOnStatusCode = true
+  // };
+  // let searchByEmail = ""; // pridejom jog tuscia stringa SVARBU, kad nebutu space, nes prideda vietoj space 20%, nes pries tai buvo klaida, jog undefiend paversdavo stringu, o ne kaip undefiend reiksme.
+  // if (email !== undefined) {
+  //   searchByEmail = `email=${email}&`
+  // };
+
+  let quearyParams = `limit=${limit}`;
+  if (email){
+    quearyParams = `&email=${email}`
   };
-  if (email !== undefined) {
-    searchByEmail = `email=${email}&`
-  };
+  // url: `${Cypress.env("apiUrl")}/v3/contacts?${searchByEmail}limit=${limit}`, vietoj 102 eilutes, parametrus galima paduoti skirtingu eiliskumu, nebutinai limitas turi buti pirmas
+
     return cy.request({
         method: "GET",
-        url: `${Cypress.env("apiUrl")}/v3/contacts?${searchByEmail}limit=${limit}`,
+        url: `${Cypress.env("apiUrl")}/v3/contacts?${quearyParams}`,
         failOnStatusCode: failOnStatusCode,
         headers: {
           "X-API-KEY": `${Cypress.env("apiKey")}`,
@@ -100,10 +107,10 @@ Cypress.Commands.add('GETcontactList', (email, limit, failOnStatusCode) => {
       });
 });
 
-Cypress.Commands.add('PATCHcontact', (contact, contactID, failOnStatusCode) => {
-  if (failOnStatusCode == undefined) {
-    failOnStatusCode = true
-  };
+Cypress.Commands.add('PATCHcontact', (contact, contactID, failOnStatusCode = true) => {
+  // if (failOnStatusCode == undefined) {
+  //   failOnStatusCode = true
+  // };
     return cy.request({
         method: "PATCH",
         url: `${Cypress.env("apiUrl")}/v3/contacts/${contactID}`,
