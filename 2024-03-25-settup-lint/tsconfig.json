@@ -6,5 +6,5 @@
     "baseUrl": "../node_modules",
     "types": ["cypress", "node"]
   },
-  "include": ["../2024-03-25-changes-ts-lint-install/**/*.*"]
+  "include": ["../2024-03-26-settup-lint/**/*.*"]
 }
