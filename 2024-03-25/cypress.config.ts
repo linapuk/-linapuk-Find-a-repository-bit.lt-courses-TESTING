@@ -1,8 +1,10 @@
-const cypress = require("cypress");
-const { defineConfig } = require("cypress");
-require("dotenv").config({path: `./cypress/ENV/${process.env.NODE_ENV || 'test'}.env`}); // || nurodoma default reiksme
+// const cypress = require("cypress");
+import { defineConfig } from "cypress";
+import * as dotenv from "dotenv";
+// require("dotenv").config({path: `./cypress/ENV/${process.env.NODE_ENV || 'test'}.env`}); // || nurodoma default reiksme
+dotenv.config({path: `./cypress/ENV/${process.env.NODE_ENV || 'test'}.env`});
 
-module.exports = defineConfig({
+export default defineConfig({
   env: {
     username: process.env.USERNAME,
     password: process.env.PASSWORD,

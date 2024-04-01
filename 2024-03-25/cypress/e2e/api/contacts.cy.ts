@@ -5,6 +5,7 @@ let lastName = faker.string.lastName;
 
 
 let contact = {
+    contactID: "",
     firstName: firstName,
     lastName: lastName,
     identifiers: [
@@ -25,7 +26,7 @@ describe("API Contacts spec", () => {
     cy.createContactByEmail(contact.identifiers[0].id).then((response) => {
       contact.contactID = response.body.contactID;
       Cypress.env("contactID", response.body.contactID);
-      cy.log(contact);
+      // cy.log(contact);
     });
   });
 

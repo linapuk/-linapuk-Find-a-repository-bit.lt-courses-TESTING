@@ -129,6 +129,32 @@ declare namespace Cypress {
        * Custom command to create contact by email.
        * @example cy.createContactByEmail('greeting@example.com')
        */
-      createContactByEmail(email: string): Chainable<Response<any>>
+      createContactByEmail(email: string, failOnStatusCode?: boolean): Chainable<Response<any>>
+
+      /**
+       * Custom command to create contact by contact object.
+       * @example cy.POSTcontact(contact, true)
+       */
+      POSTcontact(email: string, failOnStatusCode?: boolean): Chainable<Response<any>>
+
+      /**
+       * Custom command to get contact by contact id.
+       * @example cy.GETcontact(ID, true)
+       */
+      GETcontact(email: string, failOnStatusCode?: boolean): Chainable<Response<any>>
+
+      /**
+       * Custom command to get contacts list by email and limit.
+       * @example cy.GETcontactList(greeting@example.com, 5, true)
+       */
+      GETcontactList(email: string, limit: number, failOnStatusCode?: boolean): Chainable<Response<any>>
+
+      /**
+       * Custom command to update contact by id.
+       * @example cy.PATCHcontact(ID, contact, true)
+       */
+      PATCHcontact(contact: object, contactID: string, failOnStatusCode?: boolean): Chainable<Response<any>>
     }
   }
+
+  
