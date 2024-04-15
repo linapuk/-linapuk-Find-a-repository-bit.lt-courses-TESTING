@@ -1,20 +1,40 @@
 {
+  "root": true,
+  "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+  "plugins": [
+    "@typescript-eslint", "cypress"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended"
+  ],
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
+    "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
     "project": ["./tsconfig.json"]
   },
-    "plugins": ["cypress"],
   "rules": {
+    "@typescript-eslint/no-namespace": "off",
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
+    "@typescript-eslint/no-floating-promises": "error",
     "cypress/no-assigning-return-values": "error",
     "cypress/no-unnecessary-waiting": "error",
     "cypress/assertion-before-screenshot": "warn",
     "cypress/no-force": "warn",
     "cypress/no-async-tests": "error",
     "cypress/no-pause": "error"
-  },
-  "env": {
-    "cypress/globals": true
-  },
-  "extends": ["plugin:cypress/recommended"]
+  }
 }

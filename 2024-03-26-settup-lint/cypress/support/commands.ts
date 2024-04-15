@@ -45,40 +45,39 @@ Cypress.Commands.add('getElement', (element) => {
 }); // si komanda nera panaudota projekte, tai pavyzdys, kaip galima butu issikelti elenentus, ypac jei yra data-test atributas
 
 Cypress.Commands.add('issuePageElements', () => {
-    cy.get('[title="Add Issue"]').as("add-issue-button");
+    cy.get('[title="Add Issue"]').as('add-issue-button');
 });
 
 declare namespace Cypress {
     interface Chainable {
-      /**
-       * Custom command to navigate to specific page by path.
-       * @example cy.goTo('/register')
-       */
-      goTo(path: string): Chainable<JQuery<HTMLElement>>
-
-      /**
-       * Custom command to login.
-       * @example cy.login('lina@puksme.com, password')
-       */
-      login(username: string, password: string): Chainable<JQuery<HTMLElement>>
+        /**
+         * Custom command to navigate to specific page by path.
+         * @example cy.goTo('/register')
+         */
+        goTo(path: string): Chainable<JQuery<HTMLElement>>;
 
         /**
-       * Custom command to loginEmpty.
-       * @example cy.loginEmpty('null')
-       */
-        loginEmpty(): Chainable<JQuery<HTMLElement>>
+         * Custom command to login.
+         * @example cy.login('lina@puksme.com, password')
+         */
+        login(username: string, password: string): Chainable<JQuery<HTMLElement>>;
 
         /**
-       * Custom command to getElement.
-       * @example cy.getElement('/register')
-       */
-        getElement(path: string): Chainable<JQuery<HTMLElement>>
+         * Custom command to loginEmpty.
+         * @example cy.loginEmpty('null')
+         */
+        loginEmpty(): Chainable<JQuery<HTMLElement>>;
 
         /**
-       * Custom command to issuePageElements.
-       * @example cy.issuePageElements('')
-       */
-        issuePageElements(): Chainable<JQuery<HTMLElement>>
+         * Custom command to getElement.
+         * @example cy.getElement('/register')
+         */
+        getElement(path: string): Chainable<JQuery<HTMLElement>>;
 
+        /**
+         * Custom command to issuePageElements.
+         * @example cy.issuePageElements('')
+         */
+        issuePageElements(): Chainable<JQuery<HTMLElement>>;
     }
-  }
+}
