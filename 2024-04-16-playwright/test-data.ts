@@ -23,3 +23,7 @@ export const URL: string | undefined = process.env.URL;
 export const API_URL: string | undefined = process.env.API_URL;
 
 export const API_KEY: string | undefined = process.env.API_KEY;
+
+export function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
